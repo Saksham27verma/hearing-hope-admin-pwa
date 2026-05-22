@@ -212,12 +212,14 @@ function InvoiceDetailPanel({
         sx={{
           px: 2,
           py: 1.75,
+          pt: { xs: 'max(1.75rem, env(safe-area-inset-top))', md: 1.75 },
           borderBottom: 1,
           borderColor: 'divider',
           bgcolor: 'background.paper',
           position: 'sticky',
           top: 0,
-          zIndex: 2,
+          zIndex: 10,
+          flexShrink: 0,
         }}
       >
         <Stack direction="row" alignItems="flex-start" justifyContent="space-between" gap={1}>
@@ -236,8 +238,19 @@ function InvoiceDetailPanel({
               {row.invoiceNumber}
             </Typography>
           </Box>
-          <IconButton onClick={onClose} aria-label="Close" size="small" sx={{ mt: -0.5 }}>
-            <X size={20} />
+          <IconButton
+            onClick={onClose}
+            aria-label="Close"
+            size="medium"
+            sx={{
+              flexShrink: 0,
+              width: 44,
+              height: 44,
+              bgcolor: alpha(theme.palette.action.active, 0.06),
+              '&:hover': { bgcolor: alpha(theme.palette.action.active, 0.12) },
+            }}
+          >
+            <X size={22} />
           </IconButton>
         </Stack>
       </Box>
@@ -688,8 +701,13 @@ export default function SalesFinancialsView() {
         fullWidth
         fullScreen={isMobile}
         maxWidth="sm"
+        sx={{ zIndex: (t) => t.zIndex.modal + 200 }}
+        slotProps={{
+          backdrop: { sx: { zIndex: (t) => t.zIndex.modal + 200 } },
+        }}
         PaperProps={{
           sx: {
+            zIndex: (t) => t.zIndex.modal + 201,
             borderRadius: isMobile ? 0 : 3,
             overflow: 'hidden',
             maxHeight: isMobile ? '100%' : '92vh',

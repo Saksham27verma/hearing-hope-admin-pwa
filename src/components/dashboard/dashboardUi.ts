@@ -10,8 +10,9 @@ export function dashboardPageBackground(theme: Theme) {
   const green = theme.palette.secondary.main;
   return {
     minHeight: '100%',
+    position: 'relative',
+    zIndex: 1,
     mx: { xs: -1.5, md: -3 },
-    mt: { xs: -1.5, md: -3 },
     mb: { xs: -1, md: -2 },
     px: { xs: 1.5, md: 3 },
     pt: { xs: 1.5, md: 3 },

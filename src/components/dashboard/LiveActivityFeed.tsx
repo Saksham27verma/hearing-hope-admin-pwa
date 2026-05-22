@@ -365,27 +365,26 @@ export default function LiveActivityFeed({
 
   return (
     <Box
+      aria-live="polite"
       sx={{
         position: 'fixed',
-        inset: 0,
+        top: { xs: 76, md: 80 },
+        left: { xs: 8, sm: 16 },
+        right: { xs: 8, sm: 16 },
+        bottom: { xs: 'calc(env(safe-area-inset-bottom) + 88px)', md: 24 },
         pointerEvents: 'none',
-        zIndex: (t) => t.zIndex.snackbar + 2,
-        px: { xs: 1, sm: 2 },
-        pt: { xs: 7, sm: 8 },
-        pb: 2,
+        /* Below modals/drawers (1300+) so invoice close & dialogs stay clickable */
+        zIndex: (t) => t.zIndex.appBar + 1,
+        display: 'grid',
+        gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
+        gap: 1.25,
+        maxWidth: 920,
+        mx: 'auto',
+        alignContent: 'start',
+        overflow: 'visible',
       }}
     >
-      <Box
-        sx={{
-          display: 'grid',
-          gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
-          gap: 1.25,
-          maxWidth: 920,
-          mx: 'auto',
-          height: '100%',
-          alignContent: 'start',
-        }}
-      >
+      <Box sx={{ display: 'contents' }}>
         <Stack spacing={1} sx={{ justifySelf: { md: 'start' }, width: '100%', maxWidth: { md: 360 } }}>
           {left.map((item) => (
             <FeedToast
