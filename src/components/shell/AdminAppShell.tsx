@@ -27,8 +27,7 @@ import { useAdminTheme } from '@/theme/ThemeContext';
 import { useAuth } from '@/context/AuthContext';
 import { ADMIN_NAV_ITEMS } from './navConfig';
 import { usePathname } from 'next/navigation';
-
-const HEADER_HEIGHT = 72;
+import { HEADER_TOOLBAR_HEIGHT, shellAppBarSx, shellMainOffsetSx } from './shellLayout';
 
 export default function AdminAppShell({ children }: { children: React.ReactNode }) {
   const theme = useTheme();
@@ -62,16 +61,25 @@ export default function AdminAppShell({ children }: { children: React.ReactNode 
       {isDesktop && <SidebarNav open={sidebarOpen} isDesktop={isDesktop} onClose={() => setSidebarOpen(false)} />}
 
       <AppBar
+        className="hh-app-bar"
         position="fixed"
         elevation={0}
         sx={{
           left: offsetLeft,
           width: `calc(100% - ${offsetLeft}px)`,
           transition: 'left 0.28s cubic-bezier(0.4, 0, 0.2, 1), width 0.28s cubic-bezier(0.4, 0, 0.2, 1)',
+          ...shellAppBarSx,
           ...headerBarSx(theme, headerTone),
         }}
       >
-        <Toolbar sx={{ minHeight: HEADER_HEIGHT, px: { xs: 1.5, md: 3 }, gap: { xs: 0.75, md: 1 } }}>
+        <Toolbar
+          disableGutters={false}
+          sx={{
+            minHeight: { xs: 64, md: HEADER_TOOLBAR_HEIGHT },
+            px: { xs: 1.5, md: 3 },
+            gap: { xs: 0.75, md: 1 },
+          }}
+        >
           <IconButton
             onClick={() => setSidebarOpen((v) => !v)}
             size="small"
@@ -190,11 +198,9 @@ export default function AdminAppShell({ children }: { children: React.ReactNode 
         sx={{
           flex: 1,
           ml: `${offsetLeft}px`,
-          mt: `${HEADER_HEIGHT}px`,
-          minHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
+          ...shellMainOffsetSx,
           transition: 'margin-left 0.28s cubic-bezier(0.4, 0, 0.2, 1)',
           p: { xs: 1.5, md: 3 },
-          pb: { xs: 11, md: 3 },
           maxWidth: '100%',
           overflowX: 'hidden',
         }}

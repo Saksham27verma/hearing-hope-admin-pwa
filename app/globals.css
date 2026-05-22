@@ -6,6 +6,28 @@ html, body, #__next {
   -moz-osx-font-smoothing: grayscale;
 }
 
+:root {
+  --hh-header-toolbar: 72px;
+  --hh-safe-top: env(safe-area-inset-top, 0px);
+  --hh-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --hh-header-total: calc(var(--hh-header-toolbar) + var(--hh-safe-top));
+}
+
+/* iPhone (Safari + installed PWA): env() can be 0 — floor for status bar / Dynamic Island */
+@media (display-mode: standalone) {
+  :root {
+    --hh-safe-top: max(env(safe-area-inset-top, 0px), 47px);
+  }
+}
+
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 520px) {
+    :root {
+      --hh-safe-top: max(env(safe-area-inset-top, 0px), 47px);
+    }
+  }
+}
+
 * {
   box-sizing: border-box;
 }

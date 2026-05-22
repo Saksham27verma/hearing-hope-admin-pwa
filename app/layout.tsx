@@ -17,7 +17,8 @@ export const metadata: Metadata = {
   applicationName: 'Hope Admin',
   appleWebApp: {
     capable: true,
-    statusBarStyle: 'black-translucent',
+    /* default keeps status bar readable; header uses safe-area padding for notch / Dynamic Island */
+    statusBarStyle: 'default',
     title: 'Hope Admin',
   },
   formatDetection: { telephone: false },

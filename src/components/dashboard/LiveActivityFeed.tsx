@@ -368,10 +368,10 @@ export default function LiveActivityFeed({
       aria-live="polite"
       sx={{
         position: 'fixed',
-        top: { xs: 76, md: 80 },
+        top: { xs: 'calc(var(--hh-header-total) + 4px)', md: 'calc(var(--hh-header-total) + 8px)' },
         left: { xs: 8, sm: 16 },
         right: { xs: 8, sm: 16 },
-        bottom: { xs: 'calc(env(safe-area-inset-bottom) + 88px)', md: 24 },
+        bottom: { xs: 'calc(var(--hh-safe-bottom) + 88px)', md: 24 },
         pointerEvents: 'none',
         /* Below modals/drawers (1300+) so invoice close & dialogs stay clickable */
         zIndex: (t) => t.zIndex.appBar + 1,
