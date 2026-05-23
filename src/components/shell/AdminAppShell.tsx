@@ -201,7 +201,6 @@ export default function AdminAppShell({ children }: { children: React.ReactNode 
           ml: `${offsetLeft}px`,
           ...shellMainOffsetSx,
           transition: 'margin-left 0.28s cubic-bezier(0.4, 0, 0.2, 1)',
-          p: { xs: 1.5, md: 3 },
           maxWidth: '100%',
           overflowX: 'hidden',
         }}

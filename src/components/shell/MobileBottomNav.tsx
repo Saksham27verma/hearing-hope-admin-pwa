@@ -5,6 +5,7 @@ import { alpha, useTheme } from '@mui/material/styles';
 import { usePathname, useRouter } from 'next/navigation';
 import { ADMIN_NAV_ITEMS } from './navConfig';
 import { usePendingWhatsAppApprovalCount } from '@/hooks/usePendingWhatsAppApprovalCount';
+import { MOBILE_BOTTOM_NAV_HEIGHT } from './shellLayout';
 
 const PRIMARY_MOBILE_ITEMS = [
   '/dashboard',
@@ -35,7 +36,7 @@ export default function MobileBottomNav() {
         position: 'fixed',
         left: 10,
         right: 10,
-        bottom: 'calc(env(safe-area-inset-bottom) + 10px)',
+        bottom: 'calc(var(--hh-mobile-nav-gap) + var(--hh-safe-bottom))',
         zIndex: 1300,
         borderRadius: 5,
         overflow: 'hidden',
@@ -49,7 +50,7 @@ export default function MobileBottomNav() {
         value={active}
         onChange={(_event, value) => router.push(value)}
         sx={{
-          height: 66,
+          height: MOBILE_BOTTOM_NAV_HEIGHT,
           bgcolor: 'transparent',
           '& .MuiBottomNavigationAction-root': { minWidth: 0, px: 0.5 },
           '& .MuiBottomNavigationAction-label': { fontSize: 10.5, fontWeight: 700 },

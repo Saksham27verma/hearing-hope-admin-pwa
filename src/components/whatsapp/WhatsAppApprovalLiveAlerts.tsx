@@ -199,7 +199,7 @@ export default function WhatsAppApprovalLiveAlerts({
         zIndex: (t) => t.zIndex.snackbar + 2,
         pointerEvents: 'none',
         top: { xs: 'auto', md: 'calc(var(--hh-header-total) + 8px)' },
-        bottom: { xs: 'calc(env(safe-area-inset-bottom) + 92px)', md: 24 },
+        bottom: { xs: 'calc(var(--hh-mobile-nav-total) + 8px)', md: 24 },
         left: { xs: 10, md: 'auto' },
         right: { xs: 10, md: 24 },
         width: { xs: 'auto', md: 380 },

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import {
   Box,
@@ -30,6 +30,7 @@ import {
 import {
   approveWhatsAppInvoiceRequest,
   rejectWhatsAppInvoiceRequest,
+  refreshWhatsAppApprovalPreviewPdf,
 } from '@/lib/api/whatsappApprovals';
 
 function formatWhen(createdAt: unknown): string {
@@ -63,6 +64,7 @@ export default function WhatsAppApprovalsView() {
   const [busy, setBusy] = useState(false);
   const [rejectOpen, setRejectOpen] = useState(false);
   const [rejectReason, setRejectReason] = useState('');
+  const refreshedPreviewIdsRef = useRef<Set<string>>(new Set());
 
   const selected = useMemo(
     () => pending.find((r) => r.id === selectedId) ?? pending[0] ?? null,
@@ -77,6 +79,15 @@ export default function WhatsAppApprovalsView() {
       setSelectedId(pending[0].id);
     }
   }, [searchParams, pending, selectedId]);
+
+  useEffect(() => {
+    if (!selected?.id) return;
+    if (refreshedPreviewIdsRef.current.has(selected.id)) return;
+    refreshedPreviewIdsRef.current.add(selected.id);
+    refreshWhatsAppApprovalPreviewPdf(selected.id).catch((e) => {
+      console.warn('refresh whatsapp preview pdf:', e);
+    });
+  }, [selected?.id]);
 
   const runApprove = useCallback(async () => {
     if (!selected) return;

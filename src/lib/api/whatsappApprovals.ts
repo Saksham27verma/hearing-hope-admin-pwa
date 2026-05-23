@@ -13,3 +13,10 @@ export async function rejectWhatsAppInvoiceRequest(requestId: string, reason?: s
     { method: 'POST', body: { reason: reason || undefined } },
   );
 }
+
+export async function refreshWhatsAppApprovalPreviewPdf(requestId: string) {
+  return adminFetch<{ ok: boolean; error?: string; pdfUrl?: string }>(
+    `/api/whatsapp-invoice-approvals/${encodeURIComponent(requestId)}/refresh-pdf`,
+    { method: 'POST' },
+  );
+}
