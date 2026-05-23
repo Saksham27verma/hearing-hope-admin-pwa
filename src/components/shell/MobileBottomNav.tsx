@@ -1,16 +1,29 @@
 'use client';
 
-import { Paper, BottomNavigation, BottomNavigationAction } from '@mui/material';
+import { Badge, Paper, BottomNavigation, BottomNavigationAction } from '@mui/material';
 import { alpha, useTheme } from '@mui/material/styles';
 import { usePathname, useRouter } from 'next/navigation';
 import { ADMIN_NAV_ITEMS } from './navConfig';
+import { usePendingWhatsAppApprovalCount } from '@/hooks/usePendingWhatsAppApprovalCount';
 
-const PRIMARY_MOBILE_ITEMS = ['/dashboard', '/sales', '/calls', '/inventory', '/reports'];
+const PRIMARY_MOBILE_ITEMS = [
+  '/dashboard',
+  '/sales',
+  '/whatsapp-approvals',
+  '/calls',
+  '/appointments',
+];
+
+function mobileNavLabel(path: string, text: string) {
+  if (path === '/whatsapp-approvals') return 'WhatsApp';
+  return text.replace(' & Financials', '');
+}
 
 export default function MobileBottomNav() {
   const theme = useTheme();
   const router = useRouter();
   const pathname = usePathname();
+  const { count: pendingWaCount } = usePendingWhatsAppApprovalCount();
   const items = ADMIN_NAV_ITEMS.filter((item) => PRIMARY_MOBILE_ITEMS.includes(item.path));
   const active = items.find((item) => pathname === item.path || pathname?.startsWith(item.path + '/'))?.path || '/dashboard';
 
@@ -44,7 +57,22 @@ export default function MobileBottomNav() {
       >
         {items.map((item) => {
           const Icon = item.icon;
-          return <BottomNavigationAction key={item.path} value={item.path} label={item.text.replace(' & Financials', '')} icon={<Icon size={20} />} />;
+          const icon =
+            item.path === '/whatsapp-approvals' ? (
+              <Badge badgeContent={pendingWaCount} color="error" invisible={pendingWaCount === 0} max={99}>
+                <Icon size={20} />
+              </Badge>
+            ) : (
+              <Icon size={20} />
+            );
+          return (
+            <BottomNavigationAction
+              key={item.path}
+              value={item.path}
+              label={mobileNavLabel(item.path, item.text)}
+              icon={icon}
+            />
+          );
         })}
       </BottomNavigation>
     </Paper>

@@ -20,6 +20,7 @@ import InstallPwaButton from './InstallPwaButton';
 import NotificationsBell from './NotificationsBell';
 import CenterScopePicker from './CenterScopePicker';
 import MobileBottomNav from './MobileBottomNav';
+import WhatsAppApprovalLiveAlertsHost from '@/components/whatsapp/WhatsAppApprovalLiveAlertsHost';
 import DashboardHeaderTitle from './DashboardHeaderTitle';
 import HeaderActionButton from './HeaderActionButton';
 import { headerActionSx, headerBarSx, headerMenuPaperSx, type HeaderChromeTone } from './headerUi';
@@ -207,6 +208,7 @@ export default function AdminAppShell({ children }: { children: React.ReactNode 
       >
         {children}
       </Box>
+      <WhatsAppApprovalLiveAlertsHost />
       <MobileBottomNav />
     </Box>
   );
