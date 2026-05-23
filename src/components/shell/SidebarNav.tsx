@@ -5,6 +5,7 @@ import { alpha, useTheme } from '@mui/material/styles';
 import { usePathname, useRouter } from 'next/navigation';
 import { ShieldCheck } from 'lucide-react';
 import { ADMIN_NAV_ITEMS } from './navConfig';
+import { usePendingWhatsAppApprovalCount } from '@/hooks/usePendingWhatsAppApprovalCount';
 
 export const SIDEBAR_WIDTH = 264;
 export const SIDEBAR_WIDTH_COLLAPSED = 76;
@@ -24,6 +25,7 @@ export default function SidebarNav({ open, isDesktop, onClose }: SidebarNavProps
   const theme = useTheme();
   const pathname = usePathname();
   const router = useRouter();
+  const { count: pendingWaCount } = usePendingWhatsAppApprovalCount();
 
   const width = open ? SIDEBAR_WIDTH : SIDEBAR_WIDTH_COLLAPSED;
 
@@ -125,9 +127,15 @@ export default function SidebarNav({ open, isDesktop, onClose }: SidebarNavProps
                       primary={item.text}
                       primaryTypographyProps={{ fontWeight: active ? 600 : 500, fontSize: 14.5 }}
                     />
-                    {item.badge && (
+                    {(item.path === '/whatsapp-approvals' && pendingWaCount > 0
+                      ? String(pendingWaCount)
+                      : item.badge) && (
                       <Chip
-                        label={item.badge}
+                        label={
+                          item.path === '/whatsapp-approvals' && pendingWaCount > 0
+                            ? String(pendingWaCount)
+                            : item.badge
+                        }
                         size="small"
                         sx={{
                           height: 20,

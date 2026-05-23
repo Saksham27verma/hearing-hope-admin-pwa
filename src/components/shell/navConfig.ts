@@ -6,6 +6,7 @@ import {
   CalendarDays,
   ActivitySquare,
   BarChart3,
+  MessageSquare,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -22,6 +23,7 @@ export interface AdminNavItem {
 export const ADMIN_NAV_ITEMS: AdminNavItem[] = [
   { text: 'Dashboard', path: '/dashboard', icon: LayoutDashboard, badge: 'Live' },
   { text: 'Sales & Financials', path: '/sales', icon: Wallet },
+  { text: 'WhatsApp Approvals', path: '/whatsapp-approvals', icon: MessageSquare },
   { text: 'Call Management', path: '/calls', icon: PhoneCall },
   { text: 'Inventory', path: '/inventory', icon: PackageSearch },
   { text: 'Appointments', path: '/appointments', icon: CalendarDays, badge: 'Today' },

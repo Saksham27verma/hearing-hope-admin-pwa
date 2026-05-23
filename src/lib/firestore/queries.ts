@@ -209,6 +209,7 @@ export const COLLECTIONS = {
   activityLogs: 'activityLogs',
   staff: 'staff',
   notifications: 'notifications',
+  invoiceWhatsAppRequests: 'invoiceWhatsAppRequests',
   companies: 'companies',
   parties: 'parties',
   products: 'products',
