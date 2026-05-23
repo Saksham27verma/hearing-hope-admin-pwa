@@ -19,7 +19,8 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { orderBy, where } from 'firebase/firestore';
+import { where } from 'firebase/firestore';
+import { sortWhatsAppRequestsNewestFirst } from '@/lib/invoices/sortWhatsAppRequests';
 import { useSnackbar } from 'notistack';
 import { useCollection } from '@/lib/hooks/useCollection';
 import {
@@ -48,9 +49,14 @@ export default function WhatsAppApprovalsView() {
   const searchParams = useSearchParams();
   const { enqueueSnackbar } = useSnackbar();
 
-  const { data: pending, loading, error } = useCollection<InvoiceWhatsAppRequestWithId>(
+  const { data: rawPending, loading, error } = useCollection<InvoiceWhatsAppRequestWithId>(
     INVOICE_WHATSAPP_REQUESTS_COLLECTION,
-    [where('status', '==', 'pending'), orderBy('requestedAt', 'desc')],
+    [where('status', '==', 'pending')],
+  );
+
+  const pending = useMemo(
+    () => sortWhatsAppRequestsNewestFirst(rawPending),
+    [rawPending],
   );
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
